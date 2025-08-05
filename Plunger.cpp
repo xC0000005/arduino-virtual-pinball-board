@@ -22,6 +22,19 @@ void Plunger::resetPlunger() {
   restingStartTime = millis(); // Reset the resting start time
 }
 
+int Plunger::readValue() {
+  if (config.plungerPwmRead) {
+    int reading = pulseIn(23, HIGH, 4200);
+    if (reading == 0 && digitalRead(23) == 1) {
+        reading = 2100;
+    }
+    
+     return reading;
+  } else {
+    return analogRead(23);
+  }
+}
+
 void Plunger::plungerRead() {
   if (config.enablePlunger == false) {
     Gamepad1.zAxis(0);
@@ -34,7 +47,7 @@ void Plunger::plungerRead() {
   // Remove any sensor value that does not agree with the prior value
   int goodReadings = 0;
   for (int i = 0; i < 5; i++) {
-    newReading = analogRead(23);
+    newReading = readValue();
     if (newReading < truePriorValue + 10 && newReading > truePriorValue - 10) {
       goodReadings++;
       sensorValue += newReading;
@@ -48,7 +61,7 @@ void Plunger::plungerRead() {
 
   if (config.plungerMoving == true || config.disablePlungerWhenNotInUse == 0) {
     for (int i = 0; i < config.plungerAverageRead; i++) {
-      sensorValue += analogRead(23);
+      sensorValue += readValue();
     }
     sensorValue = sensorValue / (config.plungerAverageRead + 1);
   }
@@ -200,6 +213,6 @@ signed char Plunger::getDelayedPlungerValue(signed char sensorValue, unsigned lo
 
 void Plunger::sendPlungerState() {
   Serial.print(F("P,"));
-  Serial.print(analogRead(23));
+  Serial.print(readValue());
   Serial.print(F("\r\n"));
 }

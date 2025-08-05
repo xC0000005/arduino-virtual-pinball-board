@@ -73,6 +73,7 @@ void Config::init() {
 
     EEPROM.get(568, lightShowTime);
     EEPROM.get(569, reverseButtonOutputPolarity);
+    EEPROM.get(571, plungerPwmRead);
 
   } else {
     //save default config in case it's never been done before
@@ -143,6 +144,7 @@ void Config::saveConfig() {
     EEPROM.write(568, lightShowTime);
     EEPROM.write(569, reverseButtonOutputPolarity);
     EEPROM.write(570, disableUSBSuspend);
+    EEPROM.write(571, plungerPwmRead);
 
     EEPROM.write(1000, 101);
 }

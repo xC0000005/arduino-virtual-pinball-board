@@ -6,6 +6,9 @@
 
 class Plunger {
   
+  private:
+    readValue();
+    
   public:
     Plunger();
     void init();

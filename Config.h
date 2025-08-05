@@ -29,7 +29,7 @@ class Config {
     int accelerometerMax = 280;
     int accelerometerMaxY = 280;
     unsigned char plungerButtonPush = 0;
-
+    unsigned char plungerPwmRead = 1;
     unsigned char plungerAverageRead = 10;
     unsigned char nightModeButton = 14;
     unsigned char plungerLaunchButton = 23;
