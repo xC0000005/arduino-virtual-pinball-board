@@ -24,9 +24,9 @@ void Plunger::resetPlunger() {
 
 int Plunger::readValue() {
   if (config.plungerPwmRead) {
-    int reading = pulseIn(23, HIGH, 4200);
+    int reading = pulseIn(23, HIGH, 2060);
     if (reading == 0 && digitalRead(23) == 1) {
-        reading = 2100;
+        reading = 1023;
     }
     
      return reading;
