@@ -24,12 +24,12 @@ void Plunger::resetPlunger() {
 
 int Plunger::readValue() {
   if (config.plungerPwmRead) {
-    int reading = pulseIn(23, HIGH, 2060);
+    int reading =(int)pulseIn(23, HIGH, 4200);
     if (reading == 0 && digitalRead(23) == 1) {
-        reading = 1023;
+      reading = 1023;
     }
-    
-     return reading;
+    reading = map(reading, 0, 2100, 0, 1023);    
+    return (int)reading;
   } else {
     return analogRead(23);
   }
